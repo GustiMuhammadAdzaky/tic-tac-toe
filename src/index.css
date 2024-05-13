@@ -8,6 +8,12 @@ body{
   padding: 0;
 }
 
+
+.title{
+  margin: auto;
+  text-align: center;
+}
+
 .square {
   width: 35px;
   width: 35px;
@@ -21,6 +27,13 @@ body{
 .board{
   display: flex;
   flex-wrap: wrap;
-  width: 105px;
-  height: 105px;
+  width: 130px;
+  height: 120px;
+  margin: auto;
 }
+
+.status{
+  margin-top: 30px;
+  text-align: center;
+}
+

@@ -13,7 +13,7 @@ function Board() {
 
   // state split
   function handleClick(i) {
-    if (squares[i]) {
+    if (squares[i] || calculateWinner(squares)) {
       return;
     }
     const nextSquare = squares.slice();
@@ -23,14 +23,30 @@ function Board() {
     }else{
       nextSquare[i] = 'O';
     }
-    nextSquare[i] = xIsNext ? 'x' : 'o';
+    // nextSquare[i] = xIsNext ? 'x' : 'o';
     setSquares(nextSquare);
     // state yang mengubah dari true ke flase(kuncinya disini)
     setXIsNext(!xIsNext);
   }
 
 
+  const winner = calculateWinner(squares);
+  console.log(winner);
+  let status = '';
+  if (winner) {
+    status = 'Winner: ' + winner;
+  } else {
+    status = 'Next player: ' + (xIsNext ? 'X' : 'O');
+  }
+
+
+
+
   return (
+    <>
+    <div className="title">
+      <h3>Simple Tic Tac Toe</h3>
+    </div>
     <div className='board'>
       <Square value={squares[0]} onSquareClick={() => handleClick(0)}/>
       <Square value={squares[1]} onSquareClick={() => handleClick(1)}/>
@@ -42,40 +58,34 @@ function Board() {
       <Square value={squares[7]} onSquareClick={() => handleClick(7)}/>
       <Square value={squares[8]} onSquareClick={() => handleClick(8)}/>
     </div>
+    <div className='status'>{status}</div>
+    </>
   )
 }
 
 
-
-function calculateWiner(squares) {
+function calculateWinner(squares) {
   const lines = [
-    // horizontal
-    [0,1,2],
-    [3,4,5],
-    [6,7,8],
-    // vertical
-    [0,3,6],
-    [1,4,7],
-    [2,5,8],
-    // diagonal
-    [0,4,8],
-    [2,4,6],
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
   ];
 
   for (let i = 0; i < lines.length; i++) {
-    const a = lines[i][0]; // 0 
-    const b = lines[i][1]; // 1
-    const c = lines[i][2]; // 11
+    const [a, b, c] = lines[i];
 
-    if(squares[a] && squares[a] == squares[b] && squares[c]){
-      return squares[a]
+    if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
+      return squares[a];
     }
-
-    return false;
-
   }
-}
 
+  return false;
+}
 
 
 export default Board
